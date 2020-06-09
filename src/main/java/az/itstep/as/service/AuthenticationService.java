@@ -31,8 +31,9 @@ public class AuthenticationService {
 
         authenticate(request.getUsername(), request.getPassword());
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        String token = tokenService.generateToken(userDetails);
 
-        return null;
+        return new JwtAuthenticationResponse(token);
     }
 
     private void authenticate(String username, String password){
