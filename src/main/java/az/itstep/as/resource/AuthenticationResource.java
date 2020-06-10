@@ -3,6 +3,8 @@ package az.itstep.as.resource;
 
 import az.itstep.as.dto.JwtAuthenticationRequest;
 import az.itstep.as.dto.JwtAuthenticationResponse;
+import az.itstep.as.dto.UserSignUpRequest;
+import az.itstep.as.service.ApplicationUserService;
 import az.itstep.as.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationResource {
 
     private final AuthenticationService authenticationService;
+    private final ApplicationUserService applicationUserService;
 
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody JwtAuthenticationRequest request){
@@ -32,9 +37,12 @@ public class AuthenticationResource {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(){
-
-        return null;
+    public ResponseEntity<?> signUp(@RequestBody @Valid UserSignUpRequest request){
+        log.info("Rest request for sign up");
+        applicationUserService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("User successfully created");
     }
 
 
