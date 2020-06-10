@@ -20,7 +20,6 @@ public class TokenService {
     private final JwtTokenValidator tokenValidator;
     private final JwtTokenUtil tokenUtil;
 
-
     public TokenService(@Value("${default.jwt.secret}") String secret, @Value("${default.jwt.expiration}") Long expiration) {
         JwtTokenParameter jwtTokenParameter = new JwtTokenParameter(secret, expiration);
         this.tokenGenerator = new JwtTokenGenerator(jwtTokenParameter);

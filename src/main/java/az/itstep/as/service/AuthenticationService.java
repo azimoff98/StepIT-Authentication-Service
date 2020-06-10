@@ -2,6 +2,7 @@ package az.itstep.as.service;
 
 import az.itstep.as.dto.JwtAuthenticationRequest;
 import az.itstep.as.dto.JwtAuthenticationResponse;
+import az.itstep.as.dto.PasswordChangeRequest;
 import az.itstep.as.exception.AuthenticationException;
 import az.itstep.as.repository.ApplicationUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final ApplicationUserRepository applicationUserRepository;
 
+    private final String tokenPrefix = "Bearer ";
+
     public JwtAuthenticationResponse createAuthentication(JwtAuthenticationRequest request){
         log.info("Authentication request for user: {}", request.getUsername());
 
@@ -36,12 +39,20 @@ public class AuthenticationService {
         return new JwtAuthenticationResponse(token);
     }
 
+    public void changePassword(String token, PasswordChangeRequest request){
+
+
+        tokenService.getUsernameFromToken(token.substring(tokenPrefix.length()));
+
+    }
+
     private void authenticate(String username, String password){
         if(Objects.isNull(username) || Objects.isNull(password))
             throw new AuthenticationException("Username or password cannot be null");
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
+
 
 
 

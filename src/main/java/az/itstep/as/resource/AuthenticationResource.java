@@ -3,6 +3,7 @@ package az.itstep.as.resource;
 
 import az.itstep.as.dto.JwtAuthenticationRequest;
 import az.itstep.as.dto.JwtAuthenticationResponse;
+import az.itstep.as.dto.PasswordChangeRequest;
 import az.itstep.as.dto.UserSignUpRequest;
 import az.itstep.as.service.ApplicationUserService;
 import az.itstep.as.service.AuthenticationService;
@@ -11,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -43,6 +42,13 @@ public class AuthenticationResource {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("User successfully created");
+    }
+
+    @PutMapping
+    public ResponseEntity<?> changePassword(@RequestHeader(value = "Authorization") String token,
+                                            @RequestBody PasswordChangeRequest request){
+
+        return null;
     }
 
 
