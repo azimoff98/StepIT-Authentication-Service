@@ -28,7 +28,7 @@ public class TokenService {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        return tokenValidator.validaToken(token, userDetails);
+        return tokenValidator.validateToken(token, userDetails);
     }
 
     public String generateToken(UserDetails userDetails) {
